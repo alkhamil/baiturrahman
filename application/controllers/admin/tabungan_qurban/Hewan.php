@@ -82,7 +82,7 @@ class Hewan extends CI_Controller {
             ]
         ];
 
-        $data['hewan'] = $this->Hewan_model->get($where, $select);
+        $data['hewan'] = $this->Hewan_model->get($where, $select, $join);
 
         echo json_encode($data);
     }

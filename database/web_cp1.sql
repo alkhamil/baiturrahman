@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 30/06/2021 23:08:25
+ Date: 01/07/2021 20:22:07
 */
 
 SET NAMES utf8mb4;
@@ -94,7 +94,7 @@ CREATE TABLE `m_hewan`  (
   INDEX `hg_f`(`hewan_golongan_id`) USING BTREE,
   CONSTRAINT `hg_f` FOREIGN KEY (`hewan_golongan_id`) REFERENCES `m_hewan_golongan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `hj_f` FOREIGN KEY (`hewan_jenis_id`) REFERENCES `m_hewan_jenis` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_hewan
@@ -104,6 +104,7 @@ INSERT INTO `m_hewan` VALUES (2, 1, 1, 250, 'KG', 17000000);
 INSERT INTO `m_hewan` VALUES (3, 1, 2, 300, 'KG', 18000000);
 INSERT INTO `m_hewan` VALUES (4, 2, 1, 300, 'KG', 15000000);
 INSERT INTO `m_hewan` VALUES (5, 1, 1, 400, 'KG', 35000000);
+INSERT INTO `m_hewan` VALUES (6, 2, 2, 500, 'KG', 89000000);
 
 -- ----------------------------
 -- Table structure for m_hewan_golongan
@@ -154,10 +155,6 @@ CREATE TABLE `m_jamaah`  (
 -- ----------------------------
 -- Records of m_jamaah
 -- ----------------------------
-INSERT INTO `m_jamaah` VALUES (1, 'Nazmudin', '089878898910', 'Jalan raya leusadeng kab bogor');
-INSERT INTO `m_jamaah` VALUES (3, 'Subur', '089898129', 'Jalan raya');
-INSERT INTO `m_jamaah` VALUES (5, 'Alhutomi', '0891821928', 'Jalan');
-INSERT INTO `m_jamaah` VALUES (6, 'Bimbim', '089882189128', 'Halamun');
 INSERT INTO `m_jamaah` VALUES (8, 'Aldi', '0898891289', 'Gardu Seri');
 
 -- ----------------------------
@@ -168,14 +165,12 @@ CREATE TABLE `m_jamaah_group`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_jamaah_group
 -- ----------------------------
-INSERT INTO `m_jamaah_group` VALUES (1, 'Group A');
-INSERT INTO `m_jamaah_group` VALUES (4, 'Group B');
-INSERT INTO `m_jamaah_group` VALUES (5, 'Group Galaxi');
+INSERT INTO `m_jamaah_group` VALUES (6, 'Banyek');
 
 -- ----------------------------
 -- Table structure for m_jamaah_group_map
@@ -193,14 +188,7 @@ CREATE TABLE `m_jamaah_group_map`  (
 -- ----------------------------
 -- Records of m_jamaah_group_map
 -- ----------------------------
-INSERT INTO `m_jamaah_group_map` VALUES (1, 1);
-INSERT INTO `m_jamaah_group_map` VALUES (4, 1);
-INSERT INTO `m_jamaah_group_map` VALUES (5, 1);
-INSERT INTO `m_jamaah_group_map` VALUES (1, 3);
-INSERT INTO `m_jamaah_group_map` VALUES (1, 5);
-INSERT INTO `m_jamaah_group_map` VALUES (1, 6);
-INSERT INTO `m_jamaah_group_map` VALUES (4, 6);
-INSERT INTO `m_jamaah_group_map` VALUES (5, 8);
+INSERT INTO `m_jamaah_group_map` VALUES (6, 8);
 
 -- ----------------------------
 -- Table structure for m_kegiatan
@@ -255,9 +243,9 @@ CREATE TABLE `m_trans_type`  (
 -- ----------------------------
 -- Records of m_trans_type
 -- ----------------------------
-INSERT INTO `m_trans_type` VALUES (1, 'INFAQ', 500000);
-INSERT INTO `m_trans_type` VALUES (2, 'ZAKAT MAL', 6950000);
-INSERT INTO `m_trans_type` VALUES (3, 'ZAKAT FITRAH', 25000);
+INSERT INTO `m_trans_type` VALUES (1, 'INFAQ', 0);
+INSERT INTO `m_trans_type` VALUES (2, 'ZAKAT MAL', 0);
+INSERT INTO `m_trans_type` VALUES (3, 'ZAKAT FITRAH', 0);
 INSERT INTO `m_trans_type` VALUES (4, 'KAS', 0);
 
 -- ----------------------------
@@ -321,13 +309,7 @@ CREATE TABLE `t_pengeluaran`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `trp_f`(`trans_type_id`) USING BTREE,
   CONSTRAINT `trp_f` FOREIGN KEY (`trans_type_id`) REFERENCES `m_trans_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_pengeluaran
--- ----------------------------
-INSERT INTO `t_pengeluaran` VALUES (1, 1, 'OUT20210630215859', '500000', 'beli sapu', 'Riswanda', '1', '2021-06-30 21:58:59');
-INSERT INTO `t_pengeluaran` VALUES (2, 2, 'OUT20210630220031', '50000', 'Beli bakso', 'Fahri', '1', '2021-06-30 22:00:31');
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_tabungan
@@ -348,16 +330,7 @@ CREATE TABLE `t_tabungan`  (
   INDEX `hwn_f`(`hewan_id`) USING BTREE,
   CONSTRAINT `hwn_f` FOREIGN KEY (`hewan_id`) REFERENCES `m_hewan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `jmhg_f` FOREIGN KEY (`jamaah_group_id`) REFERENCES `m_jamaah_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_tabungan
--- ----------------------------
-INSERT INTO `t_tabungan` VALUES (5, 5, 5, 'TBQ20210630220425', '2021-06-30', '2021-11-30', 5, 1, '2021-06-30 22:04:25');
-INSERT INTO `t_tabungan` VALUES (6, 4, 1, 'TBQ20210630223112', '2021-07-01', '2021-09-01', 2, 1, '2021-06-30 22:31:12');
-INSERT INTO `t_tabungan` VALUES (7, 1, 3, 'TBQ20210630223814', '2021-06-30', '2021-11-30', 5, 1, '2021-06-30 22:38:14');
-INSERT INTO `t_tabungan` VALUES (8, 4, 3, 'TBQ20210630223900', '2021-06-30', '2021-10-30', 4, 1, '2021-06-30 22:39:00');
-INSERT INTO `t_tabungan` VALUES (9, 1, 1, 'TBQ20210630223954', '2021-06-30', '2022-05-30', 11, 1, '2021-06-30 22:39:54');
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_tabungan_detail
@@ -373,38 +346,7 @@ CREATE TABLE `t_tabungan_detail`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `tb_f`(`tabungan_id`) USING BTREE,
   CONSTRAINT `tb_f` FOREIGN KEY (`tabungan_id`) REFERENCES `t_tabungan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_tabungan_detail
--- ----------------------------
-INSERT INTO `t_tabungan_detail` VALUES (1, 5, 7000000, 1, '2021-07-30', '2021-06-30');
-INSERT INTO `t_tabungan_detail` VALUES (2, 5, 7000000, 1, '2021-08-29', '2021-06-30');
-INSERT INTO `t_tabungan_detail` VALUES (3, 5, 7000000, 0, '2021-09-28', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (4, 5, 7000000, 0, '2021-10-28', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (5, 5, 7000000, 0, '2021-11-27', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (6, 6, 10000000, 1, '2021-07-31', '2021-06-30');
-INSERT INTO `t_tabungan_detail` VALUES (7, 6, 10000000, 0, '2021-08-30', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (8, 7, 3600000, 0, '2021-07-30', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (9, 7, 3600000, 0, '2021-08-29', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (10, 7, 3600000, 0, '2021-09-28', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (11, 7, 3600000, 0, '2021-10-28', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (12, 7, 3600000, 0, '2021-11-27', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (13, 8, 4500000, 0, '2021-07-30', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (14, 8, 4500000, 0, '2021-08-29', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (15, 8, 4500000, 0, '2021-09-28', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (16, 8, 4500000, 0, '2021-10-28', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (17, 9, 1818182, 0, '2021-07-30', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (18, 9, 1818182, 0, '2021-08-29', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (19, 9, 1818182, 0, '2021-09-28', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (20, 9, 1818182, 0, '2021-10-28', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (21, 9, 1818182, 0, '2021-11-27', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (22, 9, 1818182, 0, '2021-12-27', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (23, 9, 1818182, 0, '2022-01-26', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (24, 9, 1818182, 0, '2022-02-25', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (25, 9, 1818182, 0, '2022-03-27', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (26, 9, 1818182, 0, '2022-04-26', NULL);
-INSERT INTO `t_tabungan_detail` VALUES (27, 9, 1818182, 0, '2022-05-26', NULL);
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_transaction
@@ -428,13 +370,6 @@ CREATE TABLE `t_transaction`  (
   CONSTRAINT `jmh_f` FOREIGN KEY (`jamaah_id`) REFERENCES `m_jamaah` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ttf_r` FOREIGN KEY (`trans_type_id`) REFERENCES `m_trans_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `zkt_f` FOREIGN KEY (`zakat_type_id`) REFERENCES `m_zakat_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_transaction
--- ----------------------------
-INSERT INTO `t_transaction` VALUES (1, 1, 11, 8, 'IN20210630215826', '', 1000000, 'Infaq', 1, '2021-06-30 21:58:26');
-INSERT INTO `t_transaction` VALUES (2, 2, 1, 8, 'IN20210630215942', '10 Gram', 7000000, '', 1, '2021-06-30 21:59:42');
-INSERT INTO `t_transaction` VALUES (3, 3, 9, 8, 'IN20210630222825', '', 25000, '', 1, '2021-06-30 22:28:25');
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

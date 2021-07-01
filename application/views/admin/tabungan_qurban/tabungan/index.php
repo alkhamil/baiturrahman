@@ -571,7 +571,15 @@
         "fixedColumns": true,
         "render": function(data, type, row) {
           var row_data = JSON.stringify(row);
-          return `<button type="button" data-id="` + row.id + `" data-row='`+row_data+`' title="Bayar untuk nabung" class="btn btn-sm btn-success btn-bayar">
+          var bg_color = 'btn-success';
+          var title = 'Sudah Lunas';
+          row.detail.forEach(dt => {
+            if (dt.is_paid == 0) {
+              bg_color = 'btn-danger'
+              title = 'Bayar untuk nabung'
+            }
+          });
+          return `<button type="button" data-id="` + row.id + `" data-row='`+row_data+`' title="`+title+`" class="btn btn-sm `+bg_color+` btn-bayar">
                         <i class="fa fa-fw fa-money-bill-alt"></i>
                     </button>`;
         }
@@ -676,6 +684,7 @@
           if (res.type == 'success') {
             Swal.fire('Berhasil!', res.msg, 'success');
             data_tabungan_detail.draw();
+            table.draw();
           } else {
             Swal.fire('Gagal!', res.msg, 'warning');
           }

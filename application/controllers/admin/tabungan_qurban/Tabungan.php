@@ -58,6 +58,7 @@ class Tabungan extends CI_Controller {
 				$row['jamaah_group_name'] = $ls['jamaah_group_name'];
 				$row['hewan_qurban'] = $ls['hewan_jenis_name'].' / '.$ls['hewan_golongan_name'].' / '.number_format($ls['hewan_price']);
 				$row['duration'] = $ls['duration']. ' Bulan';
+                $row['detail'] = $this->get_tabungan_detail($ls['id']);
 				$row['start_date'] = date('d-M-Y', strtotime($ls['start_date']));
 				$row['end_date'] = date('d-M-Y', strtotime($ls['end_date']));
 				$row['created_date'] = date('d-M-Y', strtotime($ls['created_date']));

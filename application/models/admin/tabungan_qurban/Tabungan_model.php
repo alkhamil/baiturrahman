@@ -7,8 +7,8 @@ class Tabungan_model extends CI_Model {
     public $order_by = 't_tabungan.id';
     public $order_type = 'DESC';
     public $search_field = 't_tabungan.code';
-    public $column_order = ['t_tabungan.code', 't_transaction.code', 'm_jamaah_group.name', 'm_hewan_jenis.name', 'm_hewan_golongan.name']; //set column field database for datatable orderable
-    public $column_search = ['t_tabungan.code', 't_transaction.code', 'm_jamaah_group.name', 'm_hewan_jenis.name', 'm_hewan_golongan.name']; //set column field database for datatable searchable 
+    public $column_order = ['t_tabungan.code', 'm_jamaah_group.name', 'm_hewan_jenis.name', 'm_hewan_golongan.name']; //set column field database for datatable orderable
+    public $column_search = ['t_tabungan.code', 'm_jamaah_group.name', 'm_hewan_jenis.name', 'm_hewan_golongan.name']; //set column field database for datatable searchable 
 
     public function __construct()
     {

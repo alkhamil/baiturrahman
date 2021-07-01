@@ -31,7 +31,8 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="jamaah_id" class="label-required">Jamaah</label>
-                                        <select name="jamaah_id[]" id="jamaah_id" class="form-control" multiple="multiple" style="width:100%" required></select>
+                                        <select name="jamaah_id[]" id="jamaah_id" class="form-control" multiple="multiple" style="width:100%" required>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -108,11 +109,11 @@
                 form.find('[name=name]').val(dt.name);
 
                 form.find('#jamaah_id').val("").trigger('change');
-                if(dt.jamaah) {
-                  $.each(dt.jamaah, function (index, item) { 
-                    let opt_jamaah = new Option(item.jamaah_name, item.jamaah_id, true, true);
-                    form.find('#jamaah_id').append(opt_jamaah).trigger('change');
-                  });
+                if (dt.jamaah) {
+                    $.each(dt.jamaah, function(index, item) {
+                        let opt_jamaah = new Option(item.jamaah_name, item.jamaah_id, true, true);
+                        form.find('#jamaah_id').append(opt_jamaah).trigger('change');
+                    });
                 }
             }
         });
@@ -159,31 +160,30 @@
     // end hapus user
 
     $("#jamaah_id").select2({
-      ajax: {
-        url: "<?php echo $select_jamaah ?>",
-        delay: 100,
-        dataType: 'json',
-        processResults: function(data) {
-          let items = [];
-          if (data.length > 0) {
-            for (let i = 0; i < data.length; i++) {
-              let tempData = {
-                id: data[i].id,
-                text: data[i].name,
-                data: data[i]
-              }
-              items.push(tempData)
+        ajax: {
+            url: "<?php echo $select_jamaah ?>",
+            delay: 100,
+            dataType: 'json',
+            processResults: function(data) {
+                let items = [];
+                if (data.length > 0) {
+                    for (let i = 0; i < data.length; i++) {
+                        let tempData = {
+                            id: data[i].id,
+                            text: data[i].name,
+                            data: data[i]
+                        }
+                        items.push(tempData)
+                    }
+                }
+                return {
+                    results: items
+                };
             }
-          }
-          return {
-            results: items
-          };
         }
-      }
     }).on("select2:select", function(e) {
-      let data = e.params.data;
-    }).on("select2:unselect", function(e){
-    });
+        let data = e.params.data;
+    }).on("select2:unselect", function(e) {});
 
     // data
     let table = $("#data").DataTable({
@@ -212,7 +212,7 @@
             },
             {
                 "data": "jamaah",
-                "render": function(data, type, row){
+                "render": function(data, type, row) {
                     var jamaah_names = data.map(function(item) {
                         return item['jamaah_name'];
                     });

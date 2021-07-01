@@ -33,7 +33,7 @@
                                         <td><?= $data->code ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Hewan Qurba</td>
+                                        <td>Hewan Qurban</td>
                                         <td>:</td>
                                         <td><?= $data->hewan_qurban ?></td>
                                     </tr>

@@ -18,6 +18,7 @@ class Hewan extends CI_Controller {
         $data['data'] = base_url('admin/tabungan_qurban/hewan/data');
         $data['get'] = base_url('admin/tabungan_qurban/hewan/get_data');
         $data['hapus'] = base_url('admin/tabungan_qurban/hewan/hapus');
+        $data['cetak'] = base_url('admin/tabungan_qurban/hewan/cetak');
         $data['select_hewan_jenis'] = base_url('admin/tabungan_qurban/hewan/select_hewan_jenis');
         $data['select_hewan_golongan'] = base_url('admin/tabungan_qurban/hewan/select_hewan_golongan');
         $this->load->view('admin/layout/wrapper', $data);
@@ -143,6 +144,57 @@ class Hewan extends CI_Controller {
             );
         }
         echo json_encode($msg);
+    }
+
+    public function cetak()
+    {
+        $temp_data = [];
+        $where = [];
+        $select = "
+            m_hewan.*,
+            m_hewan_jenis.id as hewan_jenis_id,
+            m_hewan_jenis.name as hewan_jenis_name,
+            m_hewan_golongan.id as hewan_golongan_id,
+            m_hewan_golongan.name as hewan_golongan_name
+        ";
+        $join = [
+            [
+                'table'     => 'm_hewan_jenis',
+                'on'        => 'm_hewan_jenis.id = m_hewan.hewan_jenis_id'
+            ],
+            [
+                'table'     => 'm_hewan_golongan',
+                'on'        => 'm_hewan_golongan.id = m_hewan.hewan_golongan_id'
+            ]
+        ];
+
+        $list = $this->Hewan_model->get_all($where, $select, $join);
+        $no = 1;
+        if($list) {
+			foreach ($list as $ls) {
+				$no++;
+				$row = array();
+                $row['no'] = $no;
+				$row['hewan_jenis_name'] = $ls['hewan_jenis_name'];
+				$row['hewan_golongan_name'] = $ls['hewan_golongan_name'];
+				$row['weight'] = $ls['weight'];
+				$row['label'] = $ls['label'];
+				$row['price'] = $ls['price'];
+				$row['id'] = $ls['id'];
+	
+				$temp_data[] = (object)$row;
+			}
+		}
+
+        $data['data'] = $temp_data;
+        $data['title'] = 'Data Hewan';
+
+        $this->load->library('pdf');
+    
+        $this->pdf->setPaper('A4', 'potrait');
+        $this->pdf->set_option('isRemoteEnabled', true);
+        $this->pdf->filename = $data['title'];
+        $this->pdf->load_view('admin/tabungan_qurban/hewan/cetak', $data);
     }
 
     public function select_hewan_jenis()

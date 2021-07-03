@@ -63,7 +63,12 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Daftar <?= $title ?></h6>
+                <h6 class="m-0 font-weight-bold text-primary">
+                    Daftar <?= $title ?>
+                    <button type="button" id="btn-cetak" class="btn btn-sm btn-info float-right">
+                        <i class="fa fa-print"></i> Cetak
+                    </button>
+                </h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -160,6 +165,31 @@
 
     });
     // end hapus user
+
+    // cetak
+    $(document).on("click.ev", "#btn-cetak",  function() {
+        showLoad();
+        setTimeout(() => {
+            Swal.fire({
+                title: 'Cetak Semua Data ini?',
+                text: "Anda akan di alihkan ke halaman baru untuk mencetak",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Cetak!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let link = "<?= $cetak ?>";
+                    window.open(link);
+                    hideLoad();
+                }else{
+                    hideLoad();
+                }
+            });
+        }, 1000);
+    });
+    // end cetak
 
     // data
     let table = $("#data").DataTable({

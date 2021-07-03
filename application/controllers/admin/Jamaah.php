@@ -18,6 +18,7 @@ class Jamaah extends CI_Controller {
         $data['data'] = base_url('admin/jamaah/data');
         $data['get'] = base_url('admin/jamaah/get_data');
         $data['hapus'] = base_url('admin/jamaah/hapus');
+        $data['cetak'] = base_url('admin/jamaah/cetak');
         $this->load->view('admin/layout/wrapper', $data);
     }
 
@@ -116,5 +117,23 @@ class Jamaah extends CI_Controller {
             );
         }
         echo json_encode($msg);
+    }
+
+    public function cetak()
+    {
+        $where = [];
+        $select = "
+            m_jamaah.*
+        ";
+        $list = $this->Jamaah_model->get_all($where, $select);
+        $data['data'] = $list;
+        $data['title'] = 'Data Jamaah';
+
+        $this->load->library('pdf');
+    
+        $this->pdf->setPaper('A4', 'potrait');
+        $this->pdf->set_option('isRemoteEnabled', true);
+        $this->pdf->filename = $data['title'];
+        $this->pdf->load_view('admin/jamaah/cetak', $data);
     }
 }

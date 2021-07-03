@@ -140,6 +140,35 @@ class Hewan_model extends CI_Model {
         return $q->row();
     }
 
+    function get_all($where, $select = '*', $join = null)
+    {
+        $this->db->select($select);
+        if($where)
+            $this->db->where($where);
+            
+        if($join) {
+            if(is_array($join)) {
+                foreach($join as $j) {
+                    if(!isset($j['type'])) 
+                        $type = 'default';
+                    else
+                        $type = $j['type'];
+
+                    if($type == 'default')
+                        $this->db->join($j['table'], $j['on']);
+                    else
+                        $this->db->join($j['table'], $j['on'], $j['type']);
+                }
+            }
+        }
+        if($this->order_by != '') {
+            $this->db->order_by($this->order_by, $this->order_type);
+        }
+
+        $q = $this->db->get($this->table);
+        return $q->result_array();
+    }
+
     function list_select($q = null, $where = null, $select = '*', $limit = 10 ,$offset = 0)
     {
         $this->db->select($select)

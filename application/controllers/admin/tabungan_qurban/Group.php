@@ -18,6 +18,7 @@ class Group extends CI_Controller {
         $data['data'] = base_url('admin/tabungan_qurban/group/data');
         $data['get'] = base_url('admin/tabungan_qurban/group/get_data');
         $data['hapus'] = base_url('admin/tabungan_qurban/group/hapus');
+        $data['cetak'] = base_url('admin/tabungan_qurban/group/cetak');
         $data['select_jamaah'] = base_url('admin/tabungan_qurban/group/select_jamaah');
         $this->load->view('admin/layout/wrapper', $data);
     }
@@ -161,6 +162,39 @@ class Group extends CI_Controller {
             );
         }
         echo json_encode($msg);
+    }
+
+    public function cetak()
+    {
+        $temp_data = [];
+        $where = [];
+        $select = "
+            m_jamaah_group.*
+        ";
+        $list = $this->Group_model->get_all($where, $select);
+        $no = 1;
+        if($list) {
+			foreach ($list as $ls) {
+				$no++;
+				$row = array();
+                $row['no'] = $no;
+				$row['name'] = $ls['name'];
+                $row['jamaah'] = count($this->get_jamaah_group($ls['id'])) > 0 ? implode(',', array_column($this->get_jamaah_group($ls['id']), 'jamaah_name')) : '';
+				$row['id'] = $ls['id'];
+	
+				$temp_data[] = (object)$row;
+			}
+		}
+
+        $data['data'] = $temp_data;
+        $data['title'] = 'Data Group';
+
+        $this->load->library('pdf');
+    
+        $this->pdf->setPaper('A4', 'potrait');
+        $this->pdf->set_option('isRemoteEnabled', true);
+        $this->pdf->filename = $data['title'];
+        $this->pdf->load_view('admin/tabungan_qurban/group/cetak', $data);
     }
 
     public function select_jamaah()

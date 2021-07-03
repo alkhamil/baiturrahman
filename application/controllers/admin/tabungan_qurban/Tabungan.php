@@ -288,7 +288,7 @@ class Tabungan extends CI_Controller {
             $row['end_date'] = date('d/m/Y', strtotime($list->end_date));
             $row['duration'] = $list->duration . ' Bulan';
             $row['hewan_qurban'] = $list->hewan_jenis_name . ' / ' . $list->hewan_golongan_name . ' / ' . number_format($list->hewan_price);
-            $row['jamaah'] = $this->get_jamaah_group($list->jamaah_group_id);
+            $row['jamaah'] = count($this->get_jamaah_group($list->jamaah_group_id)) > 0 ? implode(', ', array_column($this->get_jamaah_group($list->jamaah_group_id), 'jamaah_name')) : '';
             $row['detail'] = $this->get_tabungan_detail($list->id);
             $row['id'] = $list->id;
         }

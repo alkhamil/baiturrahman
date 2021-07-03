@@ -42,6 +42,11 @@
                                         <td>:</td>
                                         <td><?= $data->duration ?></td>
                                     </tr>
+                                    <tr>
+                                        <td>Jamaah</td>
+                                        <td>:</td>
+                                        <td><?= $data->jamaah ?></td>
+                                    </tr>
                                 </table>
                             </td>
                         </tr>

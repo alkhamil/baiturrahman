@@ -80,5 +80,92 @@
             </div>
         </div>
     </div>
-    
+
 </div>
+
+<!-- Grafik -->
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h6 class="m-0 p-0 align-middle">
+                    <span class="align-middle">Grafik Pemasukan & Pengeluaran</span>
+                </h6>
+            </div>
+            <div class="card-body">
+                <canvas id="grafik" width="100%" height="45"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // data
+    showLoad();
+    setTimeout(() => {
+        hideLoad();
+    }, 1000);
+    // end data
+
+    let bulan = [];
+    let total_pemasukan = [];
+    let total_pengeluaran = [];
+    get_grafik();
+
+    function get_grafik() {
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "<?= $get_grafik ?>",
+            dataType: "json",
+            success: function(res) {
+                $.each(res, function(index, dt) {
+                    bulan.push(dt.bulan);
+                    total_pemasukan.push(parseInt(dt.total_pemasukan));
+                    total_pengeluaran.push(parseInt(dt.total_pengeluaran));
+                });
+            }
+        });
+    }
+
+    var grafik = document.getElementById("grafik").getContext('2d');
+    var grafik_area = new Chart(grafik, {
+        type: 'line',
+        data: {
+            labels: bulan,
+            datasets: [
+                {
+                    label: "Pemasukan",
+                    data: total_pemasukan,
+                    backgroundColor: [
+                        'rgba(28, 189, 0, 0.3)',
+                    ],
+                    borderColor: [
+                        'rgba(28, 189, 0, 1)',
+                    ],
+                    borderWidth: 1
+                },
+                {
+                    label: "Pengeluaran",
+                    data: total_pengeluaran,
+                    backgroundColor: [
+                        'rgba(180, 34, 20, 0.3)',
+                    ],
+                    borderColor: [
+                        'rgba(180, 34, 20, 1)',
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>

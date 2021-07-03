@@ -45,6 +45,8 @@
 
 
     <script src="<?= base_url('assets/admin/vendor/swal/sweetalert2@10.js') ?>"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
 
     <script>
         function showLoad() {

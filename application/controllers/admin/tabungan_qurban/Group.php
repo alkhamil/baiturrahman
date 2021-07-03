@@ -179,7 +179,7 @@ class Group extends CI_Controller {
 				$row = array();
                 $row['no'] = $no;
 				$row['name'] = $ls['name'];
-                $row['jamaah'] = count($this->get_jamaah_group($ls['id'])) > 0 ? implode(',', array_column($this->get_jamaah_group($ls['id']), 'jamaah_name')) : '';
+                $row['jamaah'] = count($this->get_jamaah_group($ls['id'])) > 0 ? implode(', ', array_column($this->get_jamaah_group($ls['id']), 'jamaah_name')) : '';
 				$row['id'] = $ls['id'];
 	
 				$temp_data[] = (object)$row;
